@@ -1,11 +1,20 @@
 import type { NextConfig } from "next";
 
+const repo = "portfolio";
+const isGH = process.env.GITHUB_ACTIONS === "true";
+
 const nextConfig: NextConfig = {
-  output: "export", // 讓 build 產生一個 out 資料夾
+  output: "export",
   images: {
     unoptimized: true,
   },
-  basePath: "/portfolio",
+  trailingSlash: true,
+  ...(isGH
+    ? {
+        basePath: `/${repo}`,
+        assetPrefix: `/${repo}/`,
+      }
+    : {}),
 };
 
 export default nextConfig;
